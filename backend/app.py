@@ -46,6 +46,7 @@ def heartbeat():
 def increment_counter():
     redis_client = get_redis()
 
+    print(f"\n\napp.config['REDIS_URL'] = {app.config['REDIS_URL']}\n\n")
     print(f'\n\nredis_client = {redis_client}\n\n')
 
     redis_client.setnx("visitor", 0)
