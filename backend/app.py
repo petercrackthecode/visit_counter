@@ -7,32 +7,21 @@ app = Flask(__name__)
 
 HOST: str = os.getenv("HOST") or "0.0.0.0"
 PORT: str = os.getenv("PORT") or 5000
-
 is_local: bool = os.environ.get("ENV", "local") == "local"
+
 local_redis_url: str = os.environ.get("REDIS_URL") or "http://localhost:6379"
 app.config['REDIS_URL'] = local_redis_url if is_local else os.environ.get("REDISCLOUD_URL")
 
+redis_url = urlparse(app.config['REDIS_URL'])
+redis_pool = redis.ConnectionPool(
+    host=redis_url.hostname,
+    port=redis_url.port,
+    max_connections=20
+)
 
 def get_redis():
     """Get Redis client from Flask's g object"""
-    if 'redis' not in g:
-        redis_url = urlparse(app.config['REDIS_URL'])
-        g.redis = redis.Redis(
-            host=redis_url.hostname,
-            port=redis_url.port,
-            decode_responses=True if is_local else False,
-            password=None if is_local else redis_url.password
-        )
-    return g.redis
-
-
-@app.teardown_appcontext
-def close_redis(error):
-    """Close the Redis connection after request"""
-    redis_client = g.pop('redis', None)
-
-    if redis_client is not None:
-        redis_client.close()
+    return redis.Redis(connection_pool=redis_pool)
 
 @app.get("/")
 def heartbeat():
@@ -61,7 +50,7 @@ def increment_counter():
 if __name__ == '__main__':
     app.run(
         host=HOST,
-        port=PORT,
+        port=int(PORT),
         # auto reload on code change
         debug=True
     )
