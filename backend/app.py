@@ -5,11 +5,11 @@ from urllib.parse import urlparse
 
 app = Flask(__name__)
 
-HOST = os.getenv("HOST") or "0.0.0.0"
-PORT = os.getenv("PORT") or 5000
+HOST: str = os.getenv("HOST") or "0.0.0.0"
+PORT: str = os.getenv("PORT") or 5000
 
-is_local = os.environ.get("ENV") or "prod"
-local_redis_url = os.environ.get("REDIS_URL") or "http://localhost:6379"
+is_local: bool = os.environ.get("ENV", "local") == "local"
+local_redis_url: str = os.environ.get("REDIS_URL") or "http://localhost:6379"
 app.config['REDIS_URL'] = local_redis_url if is_local else os.environ.get("REDISCLOUD_URL")
 
 
