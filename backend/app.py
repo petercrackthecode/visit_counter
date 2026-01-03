@@ -1,9 +1,12 @@
-from flask import Flask, g
+from flask import Flask
+from flask_cors import CORS
 import os
 import redis
 from urllib.parse import urlparse
 
 app = Flask(__name__)
+# allow all origins for now. Must be fixed in production
+CORS(app)
 
 HOST: str = os.getenv("HOST") or "0.0.0.0"
 PORT: str = os.getenv("PORT") or 5000
