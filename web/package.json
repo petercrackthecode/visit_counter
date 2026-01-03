@@ -1,5 +1,5 @@
 {
-  "name": "bun-react-template",
+  "name": "visit_counter_web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production bun src/index.ts"
   },
   "dependencies": {
+    "axios": "^1.13.2",
     "react": "^19",
     "react-dom": "^19"
   },
