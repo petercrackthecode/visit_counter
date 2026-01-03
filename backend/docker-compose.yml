@@ -4,6 +4,7 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    # redis-data to permanently save the redis data when docker is off
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes
