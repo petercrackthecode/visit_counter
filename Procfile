@@ -1,4 +1,4 @@
-web: gunicorn --config gunicorn.conf.py app:app 
+web: gunicorn --config gunicorn.conf.py backend.app:app
 
 # Uncomment this `release` process if you are using a database, so that Django's model
 # migrations are run as part of app deployment, using Heroku's Release Phase feature:
