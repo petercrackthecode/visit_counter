@@ -16,6 +16,8 @@ redis_url = urlparse(app.config['REDIS_URL'])
 redis_pool = redis.ConnectionPool(
     host=redis_url.hostname,
     port=redis_url.port,
+    username=redis_url.username,
+    password=redis_url.password,
     max_connections=20
 )
 
