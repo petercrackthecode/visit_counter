@@ -68,10 +68,16 @@ def get_counter():
     redis_client.setnx("visitor", 0)
     visitor_cnt = redis_client.get("visitor")
 
-    return jsonify({
-        "visitors": visitor_cnt,
-        "ok": True
-    }), 200
+    try:
+        return jsonify({
+            "visitors": int(visitor_cnt),
+            "ok": True
+        }), 200
+    except TypeError:
+        return jsonify({
+            "errorMessage": "Internal server error: failed to fetch the visitor count",
+            "ok": False,
+        }), 500
 
 @app.errorhandler(429)
 def ratelimit_handler(_):
