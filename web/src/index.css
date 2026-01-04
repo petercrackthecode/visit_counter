@@ -1,4 +1,8 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
 }

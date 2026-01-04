@@ -4,3 +4,7 @@ export const GET_BACKEND_URL = (isDev: boolean) =>
     : "https://visit-counter-686c74c1488f.herokuapp.com/";
 
 export const POLLING_MS = 10_000;
+
+export const REPO_URL = "https://github.com/petercrackthecode/visit_counter";
+
+export const AUTHOR_GITHUB_URL = "https://github.com/petercrackthecode";
