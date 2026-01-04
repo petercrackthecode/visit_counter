@@ -2,7 +2,7 @@
 
 local-env:
     export ENV=local
-    export REDIS_URL=http://localhost:6379/
+    export REDIS_URL=redis://localhost:6379/
 
 # Default target
 run-local: setup local-env

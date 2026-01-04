@@ -1,4 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 import os
 import redis
@@ -12,8 +14,17 @@ HOST: str = os.getenv("HOST") or "0.0.0.0"
 PORT: str = os.getenv("PORT") or 5000
 is_local: bool = os.environ.get("ENV", "local") == "local"
 
-local_redis_url: str = os.environ.get("REDIS_URL") or "http://localhost:6379"
-app.config['REDIS_URL'] = local_redis_url if is_local else os.environ.get("REDISCLOUD_URL")
+local_redis_url: str = os.environ.get("REDIS_URL") or "redis://localhost:6379"
+app.config["REDIS_URL"] = local_redis_url if is_local else os.environ.get("REDISCLOUD_URL")
+# use Redis for the rate limiter
+app.config["RATELIMIT_STORAGE_URI"] = app.config["REDIS_URL"]
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=['1/30 minutes'],
+    strategy="moving-window"
+)
 
 redis_url = urlparse(app.config['REDIS_URL'])
 redis_pool = redis.ConnectionPool(
@@ -25,7 +36,7 @@ redis_pool = redis.ConnectionPool(
 )
 
 def get_redis():
-    """Get Redis client from Flask's g object"""
+    """Get Redis client from the connection pool"""
     return redis.Redis(connection_pool=redis_pool)
 
 @app.get("/")
@@ -40,16 +51,20 @@ def heartbeat():
 def increment_counter():
     redis_client = get_redis()
 
-    print(f"\n\napp.config['REDIS_URL'] = {app.config['REDIS_URL']}\n\n")
-    print(f'\n\nredis_client = {redis_client}\n\n')
-
     redis_client.setnx("visitor", 0)
     visitors_count = redis_client.incr("visitor", amount=1)
 
-    return {
+    return jsonify({
         "visitors": visitors_count,
         "ok": True
-    }
+    }), 200
+
+@app.errorhandler(429)
+def ratelimit_handler(_):
+    return jsonify({
+        "errorMessage": "Too many requests",
+        "ok": False,
+    }), 429
 
 
 if __name__ == '__main__':
