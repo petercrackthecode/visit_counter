@@ -52,10 +52,24 @@ def increment_counter():
     redis_client = get_redis()
 
     redis_client.setnx("visitor", 0)
-    visitors_count = redis_client.incr("visitor", amount=1)
+    new_visitors_cnt = redis_client.incr("visitor", amount=1)
 
     return jsonify({
-        "visitors": visitors_count,
+        "visitors": new_visitors_cnt,
+        "ok": True
+    }), 200
+
+
+@app.get("/visitor")
+@limiter.exempt
+def get_counter():
+    redis_client = get_redis()
+
+    redis_client.setnx("visitor", 0)
+    visitor_cnt = redis_client.get("visitor")
+
+    return jsonify({
+        "visitors": visitor_cnt,
         "ok": True
     }), 200
 
