@@ -40,6 +40,7 @@ def get_redis():
     return redis.Redis(connection_pool=redis_pool)
 
 @app.get("/")
+@limiter.exempt
 def heartbeat():
     return {
         "message": f"The app is alive at {HOST}/{PORT}",
