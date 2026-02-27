@@ -93,12 +93,7 @@ export function App() {
             </div>
 
             <div
-              className={`
-            decorative-line w-full h-1 bg-gradient-to-r 
-            from-indigo-500 via-purple-500 to-pink-500 rounded-full my-8
-            `}
-            />
-
+                className="decorative-line w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full my-8"/>
             <p className="text-gray-400 text-xl mx-1">
               Built by{" "}
               <motion.button
@@ -119,10 +114,7 @@ export function App() {
           <a
             href={REPO_URL}
             target="_blank"
-            className={`
-              absolute bottom-6 right-6 inline-flex items-center 
-              gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-lg transition-colors group
-              `}
+            className="absolute bottom-6 right-6 inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-lg transition-colors group"
           >
             <Github className="w-4 h-4 text-gray-400 group-hover:text-gray-200 transition-colors" />
             <span className="text-sm text-gray-400 group-hover:text-gray-200 transition-colors">
