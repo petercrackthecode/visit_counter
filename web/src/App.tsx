@@ -32,7 +32,7 @@ export function App() {
     hasRun.current = true;
 
     axios
-      .post(BACKEND_URL + "/visitor")
+        .post(BACKEND_URL + "/visitors")
       .then((resp) => {
         const data: VisitCounterResp = resp.data;
         if (!data.ok) {
@@ -54,7 +54,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    // poll the visit count every [POLLING_MS] to get the most up-to-date visitor count
+    // poll the visit count every [POLLING_MS] to get the most up-to-date visitors count
     const intervalId = setInterval(fetchVisitCnt, POLLING_MS);
 
     return () => clearInterval(intervalId);
@@ -62,7 +62,7 @@ export function App() {
 
   const fetchVisitCnt = () => {
     axios
-      .get(BACKEND_URL + "/visitor")
+        .get(BACKEND_URL + "/visitors")
       .then((resp) => {
         const data: VisitCounterResp = resp.data;
         if (!data.ok) {
@@ -93,7 +93,8 @@ export function App() {
               <FlipCounter value={visitCnt ?? 0} minDigits={6} />
             </div>
 
-            <div className="decorative-line w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full my-8" />
+            <div
+                className="decorative-line w-full h-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full my-8"/>
             <p className="text-gray-400 text-xl mx-1">
               Built by{" "}
               <motion.button

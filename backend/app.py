@@ -23,6 +23,7 @@ limiter = Limiter(
     get_remote_address,
     app=app,
     default_limits=['1/30 minutes'],
+    # why did we choose this strategy?
     strategy="moving-window"
 )
 
@@ -48,12 +49,12 @@ def heartbeat():
     }
 
 
-@app.post("/visitor")
+@app.post("/visitors")
 def increment_counter():
     redis_client = get_redis()
 
-    redis_client.setnx("visitor", 0)
-    new_visitors_cnt = redis_client.incr("visitor", amount=1)
+    redis_client.setnx("visitors", 0)
+    new_visitors_cnt = redis_client.incr("visitors", amount=1)
 
     return jsonify({
         "visitors": new_visitors_cnt,
@@ -61,22 +62,22 @@ def increment_counter():
     }), 200
 
 
-@app.get("/visitor")
+@app.get("/visitors")
 @limiter.exempt
 def get_counter():
     redis_client = get_redis()
 
-    redis_client.setnx("visitor", 0)
-    visitor_cnt = redis_client.get("visitor")
+    redis_client.setnx("visitors", 0)
+    visitors_cnt = redis_client.get("visitors")
 
     try:
         return jsonify({
-            "visitors": int(visitor_cnt),
+            "visitors": int(visitors_cnt),
             "ok": True
         }), 200
     except TypeError:
         return jsonify({
-            "errorMessage": "Internal server error: failed to fetch the visitor count",
+            "errorMessage": "Internal server error: failed to fetch the visitors count",
             "ok": False,
         }), 500
 
