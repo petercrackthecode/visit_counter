@@ -1,15 +1,11 @@
-.PHONY: setup run stop clean
-
-local-env:
-    export ENV=local
-    export REDIS_URL=redis://localhost:6379/
+.PHONY: setup run run-local stop clean
 
 # Default target
-run-local: setup local-env
-	python app.py
+run-local: setup
+	ENV=local REDIS_URL=redis://localhost:6379/ .venv/bin/python app.py
 
 run: setup
-	python app.py
+	.venv/bin/python app.py
 
 # Boot up Docker services and set up the Python environment
 setup:
