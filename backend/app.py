@@ -53,7 +53,6 @@ def heartbeat():
 def increment_counter():
     redis_client = get_redis()
 
-    redis_client.setnx("visitors", 0)
     new_visitors_cnt = redis_client.incr("visitors", amount=1)
 
     return jsonify({
