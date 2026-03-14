@@ -5,4 +5,4 @@ export const POLLING_MS = 10_000;
 
 export const REPO_URL = "https://github.com/petercrackthecode/visit_counter";
 
-export const AUTHOR_GITHUB_URL = "https://github.com/petercrackthecode";
+export const AUTHOR_PAGE = "https://www.petercrackthecode.com/";

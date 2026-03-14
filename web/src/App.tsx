@@ -2,7 +2,7 @@ import "./index.css";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import {
-  AUTHOR_GITHUB_URL,
+  AUTHOR_PAGE,
   GET_BACKEND_URL,
   POLLING_MS,
   REPO_URL,
@@ -104,7 +104,7 @@ export function App() {
                 }}
                 transition={{ duration: 0.5 }}
               >
-                <a href={AUTHOR_GITHUB_URL} target="_blank">
+                <a href={AUTHOR_PAGE} target="_blank">
                   @petercrackthecode
                 </a>
               </motion.button>{" "}
