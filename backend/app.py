@@ -7,7 +7,7 @@ import redis
 from urllib.parse import urlparse
 
 app = Flask(__name__)
-# allow all origins for now. Must be fixed in production
+# allow all origins for now for the demo purpose
 CORS(app)
 
 HOST: str = os.getenv("HOST") or "0.0.0.0"
@@ -81,7 +81,7 @@ def get_counter():
         }), 500
 
 @app.errorhandler(429)
-def ratelimit_handler(_):
+def rate_limit_handler(_):
     return jsonify({
         "errorMessage": "Too many requests",
         "ok": False,

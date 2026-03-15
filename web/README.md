@@ -1,7 +1,8 @@
-# Visit Counter App- web
-
-To install dependencies:
-
+# Visit Counter- web
+Built with React in Typescript & Motion for React.
+___
+## Quick start:
+To install the dependencies:
 NPM:
 
 ```bash
