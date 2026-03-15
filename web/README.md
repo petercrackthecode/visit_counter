@@ -2,18 +2,18 @@
 
 To install dependencies:
 
-- NPM:
+NPM:
 
 ```bash
 npm install
 ```
 
-- Bun:
+Bun:
 ```bash
 bun install
 ```
 
-- Yarn:
+Yarn:
 
 ```bash
 yarn install
@@ -22,18 +22,18 @@ yarn install
 ___
 To start a development server:
 
-- NPM:
+NPM:
 
 ```bash
 npm run dev
 ```
 
-- Bun:
+Bun:
 ```bash
 bun dev
 ```
 
-- Yarn:
+Yarn:
 
 ```bash
 yarn dev
@@ -41,18 +41,18 @@ yarn dev
 
 To run for production:
 
-- NPM:
+NPM:
 
 ```bash
 npm run start
 ```
 
-- Bun
+Bun
 ```bash
 bun start
 ```
 
-- Yarn:
+Yarn:
 
 ```bash
 yarn start
